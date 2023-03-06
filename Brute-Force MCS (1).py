@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[13]:
+# In[98]:
 
 
 import random
@@ -38,17 +38,17 @@ class Graph():
     def graphColouring(self, m):
         colour = [0] * self.V
         if self.graphColourUtil(m, colour, 0) == None:
-            return False
+            return False, 0,colour
   
         # Print the solution
-        print("Solution exist and Following are the assigned colours:")
-        for c in colour:
-            print(c, end=' ')
+        #print("Solution exist and Following are the assigned colours:")
+        #for c in colour:
+        #    print(c, end=' ')
             
         
-        print("number of color is")
-        print(max(colour))
-        return True
+        #print("number of color is")
+        #print(max(colour))
+        return True , max(colour),colour
     
     
     
@@ -70,43 +70,31 @@ class Graph():
 # Driver Code
 if __name__ == '__main__':
 
-    numvertices= random.randrange(3,100)
+    numvertices= random.randrange(3,50)
     g = Graph(numvertices)
     #g= Graph(5)
     print("number of enges")
     print(numvertices)
     g.graph = g.randomGraph(numvertices)
-    
-    if g.graphColouring(numvertices) == False:
+    true, num, colour =g.graphColouring(numvertices)
+    if true == False:
         print("solution not exist")
     
+    elif true == True:
+        for i in range(n-1):
+            stop, newnum, colour1 =g.graphColouring(n-i-1)
+            if stop == True:
+                colour=colour1
+                continue
+            elif stop == False:
+                print("Solution exist and Following are the assigned colours:")
+                for c in colour:
+                    print(c,end=' ')
+                print()
+                print('min num of colour are ',max(colour))
+                break
+                
     
-   
-    
-  
-  
-
-
-# In[ ]:
-
-
-
-
-
-# In[37]:
-
-
-
-
-
-# In[48]:
-
-
-
-
-
-# In[ ]:
-
 
 
 
