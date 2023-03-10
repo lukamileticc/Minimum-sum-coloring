@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 import random
 import numpy as np
+from matplotlib import pyplot as plt
 class Graph():
 
-    def __init__(self,num_of_vertices):
+    def __init__(self,num_of_vertices=10):
         self.num_of_vertices = num_of_vertices
         self.adjacency_matrix = np.array([[0 for _ in range(num_of_vertices)] for _ in range(num_of_vertices)])
 
@@ -21,16 +22,32 @@ class Graph():
             for j in range(n):
                 if self.adjacency_matrix[i][j] == 1:
                     self.adjacency_matrix[j][i] = 1
-    def __str__(self):
-       return str(self.adjacency_matrix)
 
+                #na dijagonali ne zelimo jedinice
+                if i == j:
+                    self.adjacency_matrix[i][j]=0
+    def __str__(self):
+       return 'Num of vertices: \n' + str(self.num_of_vertices) + '\n' + "Adjacency_matrix: \n" + str(self.adjacency_matrix)
+
+    def load_graph_from_file(self,filename):
+        self.adjacency_matrix = np.ndarray([])
+        with open(filename,"r") as f:
+            self.num_of_vertices = int(f.readline())
+            self.adjacency_matrix = np.loadtxt(f)
+
+
+    def save_graph_to_file(self,filename):
+        with open(filename, "w") as f:
+            f.write(str(g.num_of_vertices))
+            f.write('\n')
+            np.savetxt(f, self.adjacency_matrix, fmt='%d')
 
 
 def assign_color(graph):
     # vector of color
-    #random bojenje
-    # self.coloring_vector = np.array([np.random.randint(0,self.num_of_vertices) for _ in range(self.num_of_vertices)])
-    #razlicito bojenje
+    #random bojenje--- ipak NE MOZE RANDOM JER SKORO NIKAD NECE BITI VALIDNO
+    graph.coloring_vector = np.array([np.random.randint(0,graph.num_of_vertices) for _ in range(graph.num_of_vertices)])
+    # razlicito bojenje(svi cvorovi napocetku razliciti) - ovo je UVEK VALIDNO
     graph.coloring_vector = np.array([i for i in range(graph.num_of_vertices)])
 
 # to check current coloring is valid or not
@@ -55,6 +72,8 @@ def calc_solution_value(graph):
             cost += 1
     return total
 
+
+#OVO JE PROBLEMATICNA FUNKCIJA -- NE ZNAM KAKO DA NADJEM SUSEDNO RESENJE, TJ 'SUSEDNO BOJENJE'
 def change_coloring_vector(graph):
     random_vertex = random.randint(0,graph.num_of_vertices-1)
     #uzimamo boju 1. suseda
@@ -107,8 +126,13 @@ def simulated_annealing(graph, iters):
     assign_color(graph)
     curr_value = calc_solution_value(graph)
     best_value = curr_value
+    print(best_value)
 
-    for i in range(iters):
+    #za iscrtavanje grafika
+    xs = []
+    ys = []
+
+    for i in range(1,iters):
         # menjamo resenje
         # promeni_resenje
         # ako je nedopustivo , vrati na prethodno i nastavi dalje
@@ -130,7 +154,21 @@ def simulated_annealing(graph, iters):
                 curr_value = new_value
             else:
             # nastavi sa starim resenjem
-             graph.coloring_vector = old_coloring
+                graph.coloring_vector = old_coloring
+
+        xs.append(i)
+        ys.append(new_value)
+
+    # print(xs)
+    # print(ys)
+
+    #iscrtavnanje grafika
+    plt.title('Solution value through the iterations: ')
+    plt.xlabel('Iters')
+    plt.ylabel('Target function')
+    plt.plot(xs,ys,color='blue')
+    plt.show()
+
     return best_value
 
 if __name__=='__main__':
@@ -148,17 +186,31 @@ if __name__=='__main__':
     # print(is_coloring_valid(g))
 
     #graf moj iz sveske
-    g = Graph(6)
-    g.add_edge(0,1)
-    g.add_edge(0,5)
-    g.add_edge(1,3)
-    g.add_edge(1,2)
-    g.add_edge(2,3)
-    g.add_edge(2,4)
-    g.add_edge(4,5)
-    assign_color(g)
-    # print(calc_solution_value(g))
+    # g = Graph(6)
+    # g.add_edge(0,1)
+    # g.add_edge(0,5)
+    # g.add_edge(1,3)
+    # g.add_edge(1,2)
+    # g.add_edge(2,3)
+    # g.add_edge(2,4)
+    # g.add_edge(4,5)
+    # assign_color(g)
+    # # print(calc_solution_value(g))
+    # print(g)
+    # print(local_search(g,10000))
+    # print(simulated_annealing(g,1000000))
+    # print(g.coloring_vector)
+
+#i kod uporedjivanja moramo postaviti isti seed
+#isprobati i na seven bridges-u(platformi - izabrati neki jaki komp)
+
+    g = Graph(30)
+    g.random_graph()
+    # g.save_graph_to_file("random_graph.txt")
+    g.load_graph_from_file("random_graph.txt")
     print(g)
-    print(local_search(g,10000))
-    print(simulated_annealing(g,1000000))
-    print(g.coloring_vector)
+
+
+
+    random.seed(11231432)
+    print(simulated_annealing(g,10000))
