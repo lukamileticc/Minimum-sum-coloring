@@ -2,6 +2,7 @@
 import random
 import numpy as np
 from matplotlib import pyplot as plt
+from collections import Counter
 class Graph():
 
     def __init__(self,num_of_vertices=10):
@@ -59,21 +60,40 @@ def is_coloring_valid(graph):
     return True
 
 def calc_solution_value(graph):
-    total = 0
-    cost = 1
-    k = max(graph.coloring_vector)
-    for i in range(0,k+1):
-        value = 0
-        for color in graph.coloring_vector:
-            if color == i:
-                value += 1
-        total += cost * value
-        if value != 0:
-            cost += 1
-    return total
+
+    #[1,2,4,7,1,3,6,7,7,2,4] boje svakog cvora
+    #[(1,2),(2,2),(3,1),(4,2),(6,1),(7,3)] broj pojavljivanja svake boje
+    #[(7,3),(4,2),(2,2),(1,2),(6,1),(3,1)] sortiramo po boju pojavljivanja tj.drugom parametru
+    # 3*1 + 2*2 + 2*3 + 2*4 + 1*5 + 1*6  funkcija cilja=suma(broj_pojavljuvanja*indeks_unizu)
+
+    tmp = list(map(lambda el: (el,1),graph.coloring_vector))
+    tmp = list(set([(el[0], Counter(tmp)[el]) for el in tmp]))
+    tmp = sorted(tmp, key = lambda el: el[1],reverse=True)
+
+    total_sum = 0
+    for index,tupp in enumerate(tmp):
+        total_sum += (index+1)*tupp[1]
+
+    return total_sum
+
+    #stari deo
+
+    # total = 0
+    # cost = 1
+    # k = max(graph.coloring_vector)
+    # for i in range(0,k+1):
+    #     value = 0
+    #     for color in graph.coloring_vector:
+    #         if color == i:
+    #             value += 1
+    #     total += cost * value
+    #     if value != 0:
+    #         cost += 1
+    # return total
 
 
 #OVO JE PROBLEMATICNA FUNKCIJA -- NE ZNAM KAKO DA NADJEM SUSEDNO RESENJE, TJ 'SUSEDNO BOJENJE'
+#TODO
 def change_coloring_vector(graph):
     random_vertex = random.randint(0,graph.num_of_vertices-1)
     #uzimamo boju 1. suseda
@@ -210,7 +230,6 @@ if __name__=='__main__':
     g.load_graph_from_file("random_graph.txt")
     print(g)
 
-
-
     random.seed(11231432)
     print(simulated_annealing(g,10000))
+    print(g.coloring_vector)
