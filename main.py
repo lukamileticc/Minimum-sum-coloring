@@ -11,8 +11,11 @@ if __name__ == '__main__':
     max_iters = 10000
 
     #Brute force algorithm
-    print("Brute force results: ")
-    brute_force(g)
+    # solution, curr_value = brute_force(g)
+    # print("Brute force results: ")
+    # _,colors_vector = calc_solution_value(solution,g)
+    # print(colors_vector)
+    # print(curr_value)
 
     #Local search algorithm
     solution, curr_value = local_search(g, max_iters)
