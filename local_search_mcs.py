@@ -9,6 +9,7 @@ class Graph():
         self.num_of_vertices = num_of_vertices
         self.adjacency_matrix = np.array([[0 for _ in range(num_of_vertices)] for _ in range(num_of_vertices)])
 
+#ovo nam ne treba
         self.coloring_vector = []
     #neusmeren graf
     def add_edge(self, u, v):
@@ -44,6 +45,7 @@ class Graph():
             np.savetxt(f, self.adjacency_matrix, fmt='%d')
 
 
+#ova funkcija ne treba
 def assign_color(graph):
     # vector of color
     #random bojenje--- ipak NE MOZE RANDOM JER SKORO NIKAD NECE BITI VALIDNO
@@ -61,6 +63,11 @@ def is_coloring_valid(graph):
 
 def calc_solution_value(graph):
 
+
+
+
+
+#   stari deo-- radi ali nije potreban
     #[1,2,4,7,1,3,6,7,7,2,4] boje svakog cvora
     #[(1,2),(2,2),(3,1),(4,2),(6,1),(7,3)] broj pojavljivanja svake boje
     #[(7,3),(4,2),(2,2),(1,2),(6,1),(3,1)] sortiramo po boju pojavljivanja tj.drugom parametru
@@ -119,7 +126,6 @@ def local_search(graph,iters):
     assign_color(graph)
     curr_value = calc_solution_value(graph)
     best_value = curr_value
-
 
     for i in range(iters):
         #menjamo resenje
@@ -223,13 +229,29 @@ if __name__=='__main__':
 
 #i kod uporedjivanja moramo postaviti isti seed
 #isprobati i na seven bridges-u(platformi - izabrati neki jaki komp)
+#TODO
+    # g = Graph(30)
+    # g.random_graph()
+    # # g.save_graph_to_file("random_graph.txt")
+    # g.load_graph_from_file("random_graph.txt")
+    # print(g)
+    #
+    # random.seed(11231432)
+    # print(simulated_annealing(g,10000))
+    # print(g.coloring_vector)
 
-    g = Graph(30)
-    g.random_graph()
-    # g.save_graph_to_file("random_graph.txt")
-    g.load_graph_from_file("random_graph.txt")
+
+    # Majin graf
+    g = Graph(5)
+    g.add_edge(0,1)
+    g.add_edge(0,2)
+    g.add_edge(0,3)
+    g.add_edge(1,2)
+    g.add_edge(2,1)
+    g.add_edge(3,4)
+    g.add_edge(4,3)
+    assign_color(g)
+    print(calc_solution_value(g))
     print(g)
-
-    random.seed(11231432)
-    print(simulated_annealing(g,10000))
+    print(simulated_annealing(g,1000000))
     print(g.coloring_vector)
