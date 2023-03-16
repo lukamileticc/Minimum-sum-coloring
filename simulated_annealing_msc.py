@@ -34,7 +34,7 @@ def calc_solution_value(solution, graph):
 
     # print(x_boje)
     # print(sum(x_boje))
-    return sum(x_boje)
+    return sum(x_boje), x_boje
 
 def initialize(num_resources):
     #generisemo permutacije
@@ -60,7 +60,7 @@ def draw_graph(xs, ys):
 def simulated_annealing(graph, max_iters):
     #initialize solution
     solution = initialize(graph.num_of_vertices)
-    curr_value = calc_solution_value(solution, graph)
+    curr_value,_ = calc_solution_value(solution, graph)
 
     best_solution = deepcopy(solution)
     best_value = curr_value
@@ -72,7 +72,7 @@ def simulated_annealing(graph, max_iters):
     for i in range(1,max_iters+1):
         #malo promenimo resenje
         new_solution = make_small_change(solution)
-        new_value = calc_solution_value(new_solution,graph)
+        new_value,_ = calc_solution_value(new_solution,graph)
         if new_value < curr_value:
             solution = deepcopy(new_solution)
             curr_value = new_value
@@ -102,6 +102,8 @@ if __name__=='__main__':
     g.load_graph_from_file("random_graph.txt")
     # print(g)
 
-    solution, curr_value = simulated_annealing(g,10000)
+    solution, curr_value = simulated_annealing(g, 10000)
     print(solution)
     print(curr_value)
+    suma, _ = calc_solution_value(solution, g)
+    print(suma)

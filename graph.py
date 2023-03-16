@@ -3,7 +3,8 @@ class Graph():
 
     def __init__(self,num_of_vertices=10):
         self.num_of_vertices = num_of_vertices
-        self.adjacency_matrix = np.array([[0 for _ in range(num_of_vertices)] for _ in range(num_of_vertices)])
+        self.adjacency_matrix = np.array([[0 for column in range(num_of_vertices)]
+                                          for rows in range(num_of_vertices)])
 
     #neusmeren graf
     def add_edge(self, u, v):
@@ -25,6 +26,7 @@ class Graph():
 
     def get_edges(self,i,j):
         return self.adjacency_matrix[i][j]
+
     def __str__(self):
        return 'Num of vertices: \n' + str(self.num_of_vertices) + '\n' + "Adjacency_matrix: \n" + str(self.adjacency_matrix)
 
@@ -33,7 +35,6 @@ class Graph():
         with open(filename,"r") as f:
             self.num_of_vertices = int(f.readline())
             self.adjacency_matrix = np.loadtxt(f)
-
 
     def save_graph_to_file(self,filename):
         with open(filename, "w") as f:
