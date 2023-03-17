@@ -1,4 +1,5 @@
 from graph import Graph
+from copy import deepcopy
 
 #ovde cuvam permutaciju koja ima najbolji color_sum
 best_permutation = []
@@ -37,7 +38,7 @@ def next_permutation(permutation, i, used, graph):
         global best_permutation
         if coloring_sum < best_coloring_sum:
             best_coloring_sum = coloring_sum
-            best_permutation = permutation
+            best_permutation = deepcopy(permutation)
     else:
         for j in range(0, len(permutation)):
             if used[j] == False:
@@ -52,8 +53,6 @@ def brute_force(graph):
     next_permutation(permutation, 0, used, graph)
     global best_coloring_sum
     global best_permutation
-    best_coloring_sum = best_coloring_sum
-    best_permutation = best_permutation
     return best_permutation, best_coloring_sum
 
 if __name__ == '__main__':

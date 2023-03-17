@@ -51,7 +51,7 @@ def make_small_change(solution):
     return solution
 def draw_graph(xs, ys):
     # iscrtavnanje grafika
-    plt.title('Solution value through the iterations: ')
+    plt.title('Simulated annealing: Solution value through the iterations: ')
     plt.xlabel('Iters')
     plt.ylabel('Target function')
     plt.plot(xs, ys, color='blue')
