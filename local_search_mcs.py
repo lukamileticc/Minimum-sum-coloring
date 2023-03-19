@@ -93,14 +93,14 @@ def local_search(graph, max_iters):
 
 if __name__=='__main__':
 
-    g = Graph(30)
+    g = Graph(60)
     g.random_graph()
-    # g.save_graph_to_file("random_graph.txt")
+    g.save_graph_to_file("random_graph.txt")
     g.load_graph_from_file("random_graph.txt")
     # print(g)
 
-    solution, curr_value = local_search(g,10000)
-    print(solution)
-    print(curr_value)
-    suma,_ = calc_solution_value(solution,g)
-    print(suma)
+    # solution, curr_value = local_search(g,10000)
+    # print(solution)
+    # print(curr_value)
+    # suma,_ = calc_solution_value(solution,g)
+    # print(suma)
