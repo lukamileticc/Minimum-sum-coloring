@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-
-
-
 import random
 import numpy as np
-def initialize(num_resources):
+from copy import deepcopy
+from matplotlib import pyplot as plt
+from graph import Graph
 
+def initialize(num_resources):
     #generisemo varijacije
     solution = list(np.random.permutation(num_resources))
     return solution
@@ -20,64 +19,42 @@ def make_small_change(solution):
     
     return solution
 
-def  calc_solution_value(solution, graph):
-    n= len(graph[0])
-    
-    
-    x_boje= [0 for _ in range(n)]
-    zauzete= [[]  for _ in range(n)]
-            
+def draw_graph(xs, ys):
+    # iscrtavnanje grafika
+    plt.title('Variable Neighborhood Search (VNS): Solution value through the iterations: ')
+    plt.xlabel('Iters')
+    plt.ylabel('Target function')
+    plt.plot(xs, ys, color='blue')
+    plt.show()
+def free_colors(zauzete, ind, n):
+    slobodne = []
+    for i in range(1,n+1):
+        if i not in zauzete[ind]:
+            slobodne.append(i)
+    return slobodne
+
+def calc_solution_value(solution, graph):
+    n = graph.num_of_vertices
+    x_boje = [0 for _ in range(n)]
+    zauzete = [[] for _ in range(n)]
+
     for i in range(len(solution)):
         ind = solution.index(i)
-       
         if i == 0:
-
             x_boje[ind] = 1
             for j in range(n):
-                if graph[ind][j] == 1:
+                if graph.get_edges(ind,j) == 1:
                     zauzete[j].append(1)
-
         else:
-            slobodne = []
-            for z in range(1,n+1):
-                if z not in zauzete[ind]:
-                    slobodne.append(z)
-                    x_boje[ind] = min(slobodne)
-                    for j in range(n):
-                        if graph[ind][j] == 1:
-                            zauzete[j].append(x_boje[ind])
+            slobodne = free_colors(zauzete,ind,n)
+            x_boje[ind] = min(slobodne)
+            for j in range(n):
+                if graph.get_edges(ind,j) == 1:
+                    zauzete[j].append(x_boje[ind])
 
-
-
-            #ovde sad treba da saberemo
-    #print(x_boje)       
-    #print(sum(x_boje))
-    return sum(x_boje) 
-
-
-
-def randomGraph( numvertices):
-    n=numvertices
-    adjacency_matrix = np.random.randint(0,2,(n,n))
-    for i in range(n):
-        for j in range(n):
-            if adjacency_matrix[i][j] == 1:
-                adjacency_matrix[j][i] =1
-        adjacency_matrix[i][i]=0
-            
-        
-    return  adjacency_matrix
-
-
-
-
-
-from copy import deepcopy 
-from matplotlib import pyplot as plt
-import random
-
-
-
+    # print(x_boje)
+    # print(sum(x_boje))
+    return sum(x_boje), x_boje
 
 def shaking(solution, k):
    
@@ -111,41 +88,47 @@ def shaking(solution, k):
     #print(list1)
     solution[p:n]=list1
     #print(solution)
-        
-        
-       
+
     return solution
 
-
-
-
-
 def vns(graph, max_iters, k_max, move_prob):
-    n= len(graph[0])
+    n= graph.num_of_vertices
     solution = initialize(n)
-    value = calc_solution_value(solution, graph)
+    value,_ = calc_solution_value(solution, graph)
     xs = []
     ys = []
     for i in range(max_iters):
         for k in range(1, k_max):
-            new_solution = shaking(solution, k)
+            new_solution = shaking(deepcopy(solution), k)
 #             new_solution = LS(new_solution)
-            new_value = calc_solution_value(new_solution, graph)
+            new_value,_ = calc_solution_value(new_solution, graph)
             
             if new_value < value or (new_value == value and random.random() < move_prob):
                 value = new_value
                 solution = deepcopy(new_solution)
+                # print(solution)
                 break
         xs.append(i)
         ys.append(value)
         
     #iscrtavanje
-    plt.plot(xs,ys,color='blue')
-    plt.show()
+    draw_graph(xs,ys)
     
     return solution, value
 
+if __name__ == '__main__':
+    g = Graph(50)
+    g.random_graph()
+    g.save_graph_to_file("random_graph.txt")
+    g.load_graph_from_file("random_graph.txt")
+    # print(g)
 
-
-
-
+    max_iters = 10000
+    k_max = 3
+    move_prob = 0.5
+    solution, curr_value = vns(g,max_iters,k_max,move_prob)
+    print("#########")
+    print(solution)
+    print(curr_value)
+    suma,_ = calc_solution_value(solution,g)
+    print(suma)
