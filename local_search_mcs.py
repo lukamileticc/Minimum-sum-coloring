@@ -93,7 +93,7 @@ def local_search(graph, max_iters):
 
 if __name__=='__main__':
 
-    g = Graph(60)
+    g = Graph(70)
     g.random_graph()
     g.save_graph_to_file("random_graph.txt")
     g.load_graph_from_file("random_graph.txt")

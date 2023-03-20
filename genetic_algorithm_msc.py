@@ -165,11 +165,12 @@ def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,M
                       parent2,
                       new_population[j],
                       new_population[j + 1])
-
-            # mutation(new_population[j], MUTATION_PROB)
-            # mutation(new_population[j + 1], MUTATION_PROB)
-            mutation_better(new_population[j])
-            mutation_better(new_population[j + 1])
+            mut_allowed = random.uniform(0,1)
+            if mut_allowed < MUTATION_PROB:
+                # mutation(new_population[j], MUTATION_PROB)
+                # mutation(new_population[j + 1], MUTATION_PROB)
+                mutation_better(new_population[j])
+                mutation_better(new_population[j + 1])
 
             new_population[j].fitness = new_population[j].calc_fitness(graph)
             new_population[j + 1].fitness = new_population[j + 1].calc_fitness(graph)

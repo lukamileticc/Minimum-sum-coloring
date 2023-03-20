@@ -7,7 +7,7 @@ from VNS import vns
 from graph import Graph
 
 if __name__ == '__main__':
-    g = Graph(60)
+    g = Graph(70)
     g.load_graph_from_file("random_graph.txt")
     # print(g)
     max_iters = 10000
