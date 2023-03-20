@@ -53,7 +53,7 @@ if __name__ == '__main__':
     POPULATION_SIZE = 100
     NUM_OF_GENERATIONS = 100
     ELITISM_SIZE = POPULATION_SIZE // 5
-    TOURNAMENT_SIZE = 5
+    TOURNAMENT_SIZE = 10
     MUTATION_PROB = 0.05  # 5%
     solution, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
     print("Genetic algorithm results: ")

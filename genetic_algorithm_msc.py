@@ -1,4 +1,6 @@
 import random
+from copy import deepcopy
+
 import numpy as np
 from matplotlib import pyplot as plt
 from graph import Graph
@@ -85,17 +87,54 @@ def roulette_selection(population):
     # ovako ne moze
     # return np.choice(population,p = individual_prob)
 
+#Ukrstanje prvog reda kod permutacijama
+def crossover(parent1, parent2,child1,child2):
 
-def crossover(parent1, parent2, child1, child2):
-    pass
+    c1_code = deepcopy(child1.code)
+    c2_code = deepcopy(child2.code)
+
+    start_pos,end_pos = sorted(random.sample(range(len(parent1.code)),2))
+    c1_code = [-1] * len(parent1.code)
+    c1_code[start_pos:end_pos] = parent1.code[start_pos:end_pos]
+
+    for i in range(len(c1_code)):
+        if c1_code[i] == -1:
+            for j in range(len(parent2.code)):
+                if parent2.code[j] not in c1_code:
+                    c1_code[i] = parent2.code[j]
+                    break
 
 
+
+    c2_code = [-1] * len(parent2.code)
+    c2_code[start_pos:end_pos] = parent1.code[start_pos:end_pos]
+
+    for i in range(len(c2_code)):
+        if c2_code[i] == -1:
+            for j in range(len(parent1.code)):
+                if parent1.code[j] not in c2_code:
+                    c2_code[i] = parent1.code[j]
+                    break
+
+    child1.code = c1_code
+    child2.code = c2_code
+
+#Mutacija zasnovana na zameni
 def mutation(individual,MUTATION_PROB):
     poz1 = random.randrange(0, len(individual.code))
     poz2 = random.randrange(0, len(individual.code))
     pom = individual.code[poz1]
     individual.code[poz1] = individual.code[poz2]
     individual.code[poz2] = pom
+
+#Mutacija zasnovana na mesanju
+def mutation_better(individual):
+
+    start_pos,end_pos = sorted(random.sample(range(len(individual.code)),2))
+    new_code = individual.code[start_pos:end_pos+1]
+    #shuffle in place
+    random.shuffle(new_code)
+    individual.code[start_pos:end_pos+1] = new_code
 
 def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB):
     # pravim populaciju
@@ -127,8 +166,10 @@ def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,M
                       new_population[j],
                       new_population[j + 1])
 
-            mutation(new_population[j], MUTATION_PROB)
-            mutation(new_population[j + 1], MUTATION_PROB)
+            # mutation(new_population[j], MUTATION_PROB)
+            # mutation(new_population[j + 1], MUTATION_PROB)
+            mutation_better(new_population[j])
+            mutation_better(new_population[j + 1])
 
             new_population[j].fitness = new_population[j].calc_fitness(graph)
             new_population[j + 1].fitness = new_population[j + 1].calc_fitness(graph)
@@ -151,25 +192,23 @@ def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,M
     return best_individual.code , 1.0 / best_individual.fitness
 
 if __name__ == '__main__':
-    # parametri genetski=og algoritma
+    # parametri genetskog algoritma
     POPULATION_SIZE = 100
     NUM_OF_GENERATIONS = 100
     ELITISM_SIZE = POPULATION_SIZE // 5
     TOURNAMENT_SIZE = 5
     MUTATION_PROB = 0.05  # 5%
 
-    #pravimo graf
-    g = Graph(30)
+    # #pravimo graf
+    g = Graph(60)
     g.random_graph()
     g.save_graph_to_file("random_graph.txt")
     g.load_graph_from_file("random_graph.txt")
-    # print(g)
-
-    solution, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
-    print("#########")
-    print(solution)
-    print(curr_value)
-    suma,_ = calc_solution_value(solution,g)
-    print(suma)
-
-
+    # # print(g)
+    #
+    # solution, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
+    # print("#########")
+    # print(solution)
+    # print(curr_value)
+    # suma,_ = calc_solution_value(solution,g)
+    # print(suma)
