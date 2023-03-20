@@ -19,7 +19,7 @@ def initialize(num_of_alleles):
 
 def draw_graph(xs, ys):
     # iscrtavnanje grafika
-    plt.title('Simulated annealing: Solution value through the iterations: ')
+    plt.title('Genetic algorithm: Solution value through the iterations: ')
     plt.xlabel('Iters')
     plt.ylabel('Target function')
     plt.plot(xs, ys, color='blue')
@@ -63,7 +63,7 @@ class Individual:
     def __lt__(self, other):
         return self.fitness < other.fitness
 
-def tournament_selection(population, tournament_size,graph, forbiden=None):
+def tournament_selection(population, tournament_size, graph, forbiden=None):
     allowed = list(set(population).difference({forbiden}))
     random_individulas = random.sample(allowed,tournament_size)
     #potrebno je da nadjemo najbolju po fitnesu
@@ -153,8 +153,8 @@ def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,M
 
         # ostale jedinke ukrstamo
         for j in range(ELITISM_SIZE, POPULATION_SIZE, 2):
-            # parent1 = tournament_selection(population,TOURNAMENT_SIZE)
-            # parent2 = tournament_selection(population,TOURNAMENT_SIZE,forbiden = parent1)
+            # parent1 = tournament_selection(population, TOURNAMENT_SIZE, graph)
+            # parent2 = tournament_selection(population, TOURNAMENT_SIZE, graph, forbiden=parent1)
 
             parent1 = roulette_selection(population)
             parent2 = roulette_selection(population)
@@ -203,13 +203,13 @@ if __name__ == '__main__':
     # #pravimo graf
     g = Graph(60)
     g.random_graph()
-    g.save_graph_to_file("random_graph.txt")
+    # g.save_graph_to_file("random_graph.txt")
     g.load_graph_from_file("random_graph.txt")
     # # print(g)
     #
-    # solution, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
-    # print("#########")
-    # print(solution)
-    # print(curr_value)
-    # suma,_ = calc_solution_value(solution,g)
-    # print(suma)
+    solution, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
+    print("#########")
+    print(solution)
+    print(curr_value)
+    suma,_ = calc_solution_value(solution,g)
+    print(suma)
