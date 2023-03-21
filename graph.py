@@ -41,3 +41,18 @@ class Graph():
             f.write(str(self.num_of_vertices))
             f.write('\n')
             np.savetxt(f, self.adjacency_matrix, fmt='%d')
+
+
+    def load_dimacs_file(self,filename):
+        with open(filename, "r") as f:
+            _,_,n,m = f.readline().split(' ')
+            n = int(n)
+            m = int(m)
+
+            self.__init__(n)
+            while(m):
+                _,u,v = f.readline().split(' ')
+                u = int(u) - 1
+                v = int(v) - 1
+                self.add_edge(u,v)
+                m-=1
