@@ -1,6 +1,6 @@
 import random
 import numpy as np
-
+from local_search_mcs import draw_graph
 from VNS import vns
 from graph import Graph
 from local_search_mcs import local_search
@@ -20,12 +20,20 @@ if __name__ == '__main__':
     random.seed(2314141)
     np.random.seed(2314141)
 
+    xs = []
+    ys = []
     for i in range(iteration_number):
-        _, curr_value = vns(g, max_iters,5,0.5)
+        _, curr_value = simulated_annealing(g, max_iters)
+        xs.append(i)
+        ys.append(curr_value)
         avg_value += curr_value
         if curr_value < best_value:
             best_value = curr_value
 
+
     print("Simulated annealing results: ")
     print("Best value: " + str(best_value))
     print("Avg value: " + str(avg_value / iteration_number))
+
+    title = "Simulated annealing"
+    draw_graph(title,'/home/marija/Desktop/Racunarska-Inteligencija/graphic_results/' + title + '.png',xs,ys)
