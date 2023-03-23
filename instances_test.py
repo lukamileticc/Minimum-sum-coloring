@@ -1,39 +1,62 @@
 import random
 import numpy as np
-from local_search_mcs import draw_graph
-from VNS import vns
+import time
+from matplotlib import pyplot as plt
 from graph import Graph
+from genetic_algorithm_msc import ga
 from local_search_mcs import local_search
 from simulated_annealing_msc import simulated_annealing
+from hybrid_ga_sa import hybrid
+
+def draw_graph(title,path_to_save, xs, ys):
+    # iscrtavnanje grafika
+    font1 = {'family': 'fantasy', 'color': 'black', 'size': 10}
+    plt.title(title,fontdict=font1)
+    plt.xlabel('Iters')
+    plt.ylabel('Value')
+    plt.plot(xs, ys, color='blue')
+    fig = plt.gcf()
+    plt.show()
+    plt.draw()
+    fig.savefig(path_to_save,dpi=100)
 
 if __name__ == '__main__':
     g = Graph()
-    g.load_dimacs_file('graph_instances/group_1/mug88_25.txt')
+    file = 'myciel6.txt'
+    g.load_dimacs_file('graph_instances/group_1/' + file)
     # print(g)
     iteration_number = 5
     best_value = float('inf')
     avg_value = 0
 
-
-
     max_iters = 10000
     random.seed(2314141)
     np.random.seed(2314141)
 
+    # parametri genetskog algoritma
+    POPULATION_SIZE = 100
+    NUM_OF_GENERATIONS = 100
+    ELITISM_SIZE = POPULATION_SIZE // 5
+    TOURNAMENT_SIZE = 10
+    MUTATION_PROB = 0.05  # 5%
+
     xs = []
     ys = []
+    start = time.time()
     for i in range(iteration_number):
-        _, curr_value = simulated_annealing(g, max_iters)
+        _, curr_value = hybrid(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
         xs.append(i)
         ys.append(curr_value)
         avg_value += curr_value
         if curr_value < best_value:
             best_value = curr_value
 
+    end = time.time()
 
-    print("Simulated annealing results: ")
+    print("Hybrid search results: ")
     print("Best value: " + str(best_value))
     print("Avg value: " + str(avg_value / iteration_number))
 
-    title = "Simulated annealing"
-    draw_graph(title,'/home/marija/Desktop/Racunarska-Inteligencija/graphic_results/' + title + '.png',xs,ys)
+    title = "Hybrid(ga(roulette) + sa(iters=100)),\nGraph instance:" + file + '(95 755),\nTime:' + str(
+        round(end - start, 3)) + ' sec, Avg value: ' + str(avg_value/iteration_number) + ', Best value: ' + str(best_value)
+    draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)

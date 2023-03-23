@@ -50,16 +50,13 @@ def make_small_change(solution):
     solution[poz2] = pom
 
     return solution
-def draw_graph(title,path_to_save, xs, ys):
+def draw_graph(xs, ys):
     # iscrtavnanje grafika
-    plt.title(title)
+    plt.title('Local search: Solution value through the iterations: ')
     plt.xlabel('Iters')
-    plt.ylabel('Value')
+    plt.ylabel('Target function')
     plt.plot(xs, ys, color='blue')
-    fig = plt.gcf()
     plt.show()
-    plt.draw()
-    fig.savefig(path_to_save,dpi=100)
 
 def local_search(graph, max_iters):
     #initialize solution
@@ -90,7 +87,7 @@ def local_search(graph, max_iters):
         xs.append(i)
         ys.append(curr_value)
 
-    # draw_graph(xs,ys)
+    draw_graph(xs,ys)
 
     return best_solution,best_value
 
