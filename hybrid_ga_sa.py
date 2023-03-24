@@ -23,8 +23,8 @@ def simulated_annealing(graph,init_solution, max_iters):
     best_value = curr_value
 
     # za iscrtavanje grafika
-    xs = []
-    ys = []
+    # xs = []
+    # ys = []
 
     for i in range(1,max_iters+1):
         #malo promenimo resenje
@@ -44,8 +44,8 @@ def simulated_annealing(graph,init_solution, max_iters):
                 curr_value = new_value
                 solution = deepcopy(new_solution)
 
-        xs.append(i)
-        ys.append(curr_value)
+        # xs.append(i)
+        # ys.append(curr_value)
 
     # draw_graph(xs,ys)
 
@@ -100,7 +100,6 @@ def hybrid(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SI
         ys.append(1.0 / max(population).fitness)
 
         population = new_population
-
     #iscrtavanje grafika
     draw_graph(xs,ys)
     best_individual = max(population)
@@ -119,10 +118,10 @@ if __name__ == '__main__':
     MUTATION_PROB = 0.05  # 5%
 
     # #pravimo graf
-    g = Graph(70)
+    g = Graph(20)
     g.random_graph()
-    # g.save_graph_to_file("random_graph.txt")
-    g.load_graph_from_file("random_graph.txt")
+    # g.save_graph_to_file("our_graph_instances/random_graph.txt")
+    g.load_graph_from_file("our_graph_instances/random_graph.txt")
     # # print(g)
 
     solution, curr_value = hybrid(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)

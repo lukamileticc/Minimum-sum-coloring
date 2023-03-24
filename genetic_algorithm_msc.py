@@ -159,7 +159,7 @@ def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,M
             parent1 = roulette_selection(population)
             parent2 = roulette_selection(population)
 
-            choices = {chromosome: chromosome.fitness for chromosome in population}
+            # choices = {chromosome: chromosome.fitness for chromosome in population}
 
             crossover(parent1,
                       parent2,
@@ -203,8 +203,8 @@ if __name__ == '__main__':
     # #pravimo graf
     g = Graph(60)
     g.random_graph()
-    # g.save_graph_to_file("random_graph.txt")
-    g.load_graph_from_file("random_graph.txt")
+    # g.save_graph_to_file("our_graph_instances/random_graph.txt")
+    g.load_graph_from_file("our_graph_instances/random_graph.txt")
     # # print(g)
     #
     solution, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)

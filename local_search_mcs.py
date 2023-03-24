@@ -50,6 +50,16 @@ def make_small_change(solution):
     solution[poz2] = pom
 
     return solution
+
+def make_small_change_better(solution):
+
+    start_pos,end_pos = sorted(random.sample(range(len(solution)),2))
+    new_code = solution[start_pos:end_pos+1]
+    #shuffle in place
+    random.shuffle(new_code)
+    solution[start_pos:end_pos+1] = new_code
+
+    return solution
 def draw_graph(xs, ys):
     # iscrtavnanje grafika
     plt.title('Local search: Solution value through the iterations: ')
@@ -72,7 +82,8 @@ def local_search(graph, max_iters):
 
     for i in range(max_iters):
         #malo promenimo resenje
-        new_solution = make_small_change(solution)
+        # new_solution = make_small_change(solution)
+        new_solution = make_small_change_better(solution)
         new_value,_ = calc_solution_value(new_solution,graph)
         if new_value < curr_value:
             solution = deepcopy(new_solution)
@@ -93,10 +104,10 @@ def local_search(graph, max_iters):
 
 if __name__=='__main__':
 
-    g = Graph(30)
+    g = Graph(20)
     g.random_graph()
-    g.save_graph_to_file("random_graph.txt")
-    g.load_graph_from_file("random_graph.txt")
+    # g.save_graph_to_file("our_graph_instances/random_graph.txt")
+    g.load_graph_from_file("our_graph_instances/random_graph.txt")
     print(g)
 
     solution, curr_value = local_search(g,10000)

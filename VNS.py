@@ -10,14 +10,6 @@ def initialize(num_resources):
     #generisemo varijacije
     solution = list(np.random.permutation(num_resources))
     return solution
-def make_small_change(solution):
-    poz1 = random.randrange(0, len(solution))
-    poz2= random.randrange(0, len(solution))
-    pom = solution[poz1]
-    solution[poz1]= solution[poz2]
-    solution[poz2] = pom
-    
-    return solution
 
 def draw_graph(xs, ys):
     # iscrtavnanje grafika
@@ -117,14 +109,14 @@ def vns(graph, max_iters, k_max, move_prob):
     return solution, value
 
 if __name__ == '__main__':
-    g = Graph(50)
+    g = Graph(20)
     g.random_graph()
-    g.save_graph_to_file("random_graph.txt")
-    g.load_graph_from_file("random_graph.txt")
+    # g.save_graph_to_file("our_graph_instances/random_graph.txt")
+    g.load_graph_from_file("our_graph_instances/random_graph.txt")
     # print(g)
 
     max_iters = 10000
-    k_max = 3
+    k_max = 5
     move_prob = 0.5
     solution, curr_value = vns(g,max_iters,k_max,move_prob)
     print("#########")

@@ -58,7 +58,7 @@ def brute_force(graph):
 if __name__ == '__main__':
     g = Graph(12)
     g.random_graph()
-    g.save_graph_to_file("small_random_graph.txt")
-    g.load_graph_from_file("small_random_graph.txt")
+    g.save_graph_to_file("our_graph_instances/small_random_graph.txt")
+    g.load_graph_from_file("our_graph_instances/small_random_graph.txt")
     # print(g)
-    # print(brute_force(g))
+    print(brute_force(g))
