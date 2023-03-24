@@ -1,4 +1,4 @@
-# Minimum sum coloring
+# Minimum color sum
 
 #TODO
 
