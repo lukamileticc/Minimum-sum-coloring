@@ -24,7 +24,7 @@ def draw_graph(title,path_to_save, xs, ys):
 
 if __name__ == '__main__':
     g = Graph()
-    file = 'miles1500.txt'
+    file = 'fpsol2.i.2.txt'
     g.load_dimacs_file('graph_instances/group_2/' + file)
     # print(g)
     iteration_number = 5
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     start = time.time()
     for i in range(iteration_number):
         print(i)
-        _, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
+        _, curr_value = vns(g,max_iters,k_max,move_prob)
         xs.append(i)
         ys.append(curr_value)
         avg_value += curr_value
@@ -60,27 +60,10 @@ if __name__ == '__main__':
             best_value = curr_value
     end = time.time()
 
-    title = "Genetic algorithm(tournament selection(n=10)),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
+    title = "VNS(k_max=3, iters=10000),\nGraph instance:" + file + '(451 8691),\nTime:' + str(
         round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
     draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
 
-    # xs = []
-    # ys = []
-    # start = time.time()
-    # for i in range(iteration_number):
-    #     print(i)
-    #     _, curr_value = vns(g,max_iters,k_max,move_prob)
-    #     xs.append(i)
-    #     ys.append(curr_value)
-    #     avg_value += curr_value
-    #     if curr_value < best_value:
-    #         best_value = curr_value
-    # end = time.time()
-    #
-    # title = "VNS(k_max=3, iters=10000),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
-    #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
-    # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
-    #
     # best_value = float('inf')
     # avg_value = 0
     #
@@ -98,11 +81,11 @@ if __name__ == '__main__':
     #         best_value = curr_value
     # end = time.time()
     #
-    # title = "VNS(k_max=5, iters=10000),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
+    # title = "VNS(k_max=5, iters=10000),\nGraph instance:" + file + '(451 8691),\nTime:' + str(
     #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
     #     best_value)
     # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
-    #
+
     #
     # best_value = float('inf')
     # avg_value = 0

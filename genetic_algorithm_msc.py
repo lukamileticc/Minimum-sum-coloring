@@ -153,11 +153,11 @@ def ga(graph,POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE,TOURNAMENT_SIZE,M
 
         # ostale jedinke ukrstamo
         for j in range(ELITISM_SIZE, POPULATION_SIZE, 2):
-            parent1 = tournament_selection(population, TOURNAMENT_SIZE, graph)
-            parent2 = tournament_selection(population, TOURNAMENT_SIZE, graph, forbiden=parent1)
+            # parent1 = tournament_selection(population, TOURNAMENT_SIZE, graph)
+            # parent2 = tournament_selection(population, TOURNAMENT_SIZE, graph, forbiden=parent1)
 
-            # parent1 = roulette_selection(population)
-            # parent2 = roulette_selection(population)
+            parent1 = roulette_selection(population)
+            parent2 = roulette_selection(population)
 
             # choices = {chromosome: chromosome.fitness for chromosome in population}
 
