@@ -64,108 +64,108 @@ if __name__ == '__main__':
         round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
     draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
 
-    # best_value = float('inf')
-    # avg_value = 0
-    #
-    # xs = []
-    # ys = []
-    # k_max = 5
-    # start = time.time()
-    # for i in range(iteration_number):
-    #     print(i)
-    #     _, curr_value = vns(g, max_iters,k_max,move_prob)
-    #     xs.append(i)
-    #     ys.append(curr_value)
-    #     avg_value += curr_value
-    #     if curr_value < best_value:
-    #         best_value = curr_value
-    # end = time.time()
-    #
-    # title = "VNS(k_max=5, iters=10000),\nGraph instance:" + file + '(451 8691),\nTime:' + str(
-    #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
-    #     best_value)
-    # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
+    best_value = float('inf')
+    avg_value = 0
 
+    xs = []
+    ys = []
+    k_max = 5
+    start = time.time()
+    for i in range(iteration_number):
+        print(i)
+        _, curr_value = vns(g, max_iters,k_max,move_prob)
+        xs.append(i)
+        ys.append(curr_value)
+        avg_value += curr_value
+        if curr_value < best_value:
+            best_value = curr_value
+    end = time.time()
+
+    title = "VNS(k_max=5, iters=10000),\nGraph instance:" + file + '(451 8691),\nTime:' + str(
+        round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
+        best_value)
+    draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
+
+
+    best_value = float('inf')
+    avg_value = 0
+
+    xs = []
+    ys = []
+    start = time.time()
+    for i in range(iteration_number):
+        print(i)
+        _, curr_value = local_search(g,max_iters)
+        xs.append(i)
+        ys.append(curr_value)
+        avg_value += curr_value
+        if curr_value < best_value:
+            best_value = curr_value
+    end = time.time()
+
+    title = "Local search(iters=10000),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
+        round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
+    draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
     #
-    # best_value = float('inf')
-    # avg_value = 0
     #
-    # xs = []
-    # ys = []
-    # start = time.time()
-    # for i in range(iteration_number):
-    #     print(i)
-    #     _, curr_value = local_search(g,max_iters)
-    #     xs.append(i)
-    #     ys.append(curr_value)
-    #     avg_value += curr_value
-    #     if curr_value < best_value:
-    #         best_value = curr_value
-    # end = time.time()
+    best_value = float('inf')
+    avg_value = 0
+
+    xs = []
+    ys = []
+    start = time.time()
+    for i in range(iteration_number):
+        print(i)
+        _, curr_value = simulated_annealing(g,max_iters)
+        xs.append(i)
+        ys.append(curr_value)
+        avg_value += curr_value
+        if curr_value < best_value:
+            best_value = curr_value
+    end = time.time()
+
+    title = "Simulated annealing(iters=10000),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
+        round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
+    draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
     #
-    # title = "Local search(iters=10000),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
-    #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
-    # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
-    #
-    #
-    # best_value = float('inf')
-    # avg_value = 0
-    #
-    # xs = []
-    # ys = []
-    # start = time.time()
-    # for i in range(iteration_number):
-    #     print(i)
-    #     _, curr_value = simulated_annealing(g,max_iters)
-    #     xs.append(i)
-    #     ys.append(curr_value)
-    #     avg_value += curr_value
-    #     if curr_value < best_value:
-    #         best_value = curr_value
-    # end = time.time()
-    #
-    # title = "Simulated annealing(iters=10000),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
-    #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value/iteration_number) + ' Best value:' + str(best_value)
-    # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
-    #
-    # best_value = float('inf')
-    # avg_value = 0
-    #
-    # xs = []
-    # ys = []
-    # start = time.time()
-    # for i in range(iteration_number):
-    #     print(i)
-    #     _, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
-    #     xs.append(i)
-    #     ys.append(curr_value)
-    #     avg_value += curr_value
-    #     if curr_value < best_value:
-    #         best_value = curr_value
-    # end = time.time()
-    #
-    # title = "Genetic algorithm(roulette selection),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
-    #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
-    #     best_value)
-    # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
-    #
-    # best_value = float('inf')
-    # avg_value = 0
-    #
-    # xs = []
-    # ys = []
-    # start = time.time()
-    # for i in range(iteration_number):
-    #     print(i)
-    #     _, curr_value = hybrid(g, POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE, TOURNAMENT_SIZE, MUTATION_PROB)
-    #     xs.append(i)
-    #     ys.append(curr_value)
-    #     avg_value += curr_value
-    #     if curr_value < best_value:
-    #         best_value = curr_value
-    # end = time.time()
-    #
-    # title = "Hybrid(ga(roulette) + sa(iters=100)),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
-    #     round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
-    #     best_value)
-    # draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
+    best_value = float('inf')
+    avg_value = 0
+
+    xs = []
+    ys = []
+    start = time.time()
+    for i in range(iteration_number):
+        print(i)
+        _, curr_value = ga(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)
+        xs.append(i)
+        ys.append(curr_value)
+        avg_value += curr_value
+        if curr_value < best_value:
+            best_value = curr_value
+    end = time.time()
+
+    title = "Genetic algorithm(roulette selection),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
+        round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
+        best_value)
+    draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
+
+    best_value = float('inf')
+    avg_value = 0
+
+    xs = []
+    ys = []
+    start = time.time()
+    for i in range(iteration_number):
+        print(i)
+        _, curr_value = hybrid(g, POPULATION_SIZE, NUM_OF_GENERATIONS, ELITISM_SIZE, TOURNAMENT_SIZE, MUTATION_PROB)
+        xs.append(i)
+        ys.append(curr_value)
+        avg_value += curr_value
+        if curr_value < best_value:
+            best_value = curr_value
+    end = time.time()
+
+    title = "Hybrid(ga(roulette) + sa(iters=100)),\nGraph instance:" + file + '(128 10396),\nTime:' + str(
+        round(end - start, 3)) + ' sec, Avg value:' + str(avg_value / iteration_number) + ' Best value:' + str(
+        best_value)
+    draw_graph(title, 'graphic_results/' + title + '.png', xs, ys)
