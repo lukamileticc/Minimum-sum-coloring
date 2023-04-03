@@ -82,8 +82,8 @@ def local_search(graph, max_iters):
 
     for i in range(max_iters):
         #malo promenimo resenje
-        # new_solution = make_small_change(solution)
-        new_solution = make_small_change_better(solution)
+        new_solution = make_small_change(solution)
+        # new_solution = make_small_change_better(solution)
         new_value,_ = calc_solution_value(new_solution,graph)
         if new_value < curr_value:
             solution = deepcopy(new_solution)
@@ -104,11 +104,11 @@ def local_search(graph, max_iters):
 
 if __name__=='__main__':
 
-    g = Graph(20)
+    g = Graph(50)
     g.random_graph()
-    # g.save_graph_to_file("our_graph_instances/random_graph.txt")
+    g.save_graph_to_file("our_graph_instances/random_graph.txt")
     g.load_graph_from_file("our_graph_instances/random_graph.txt")
-    print(g)
+    # print(g)
 
     solution, curr_value = local_search(g,10000)
     print(solution)

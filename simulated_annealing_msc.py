@@ -81,8 +81,8 @@ def simulated_annealing(graph, max_iters):
 
     for i in range(1,max_iters+1):
         #malo promenimo resenje
-        # new_solution = make_small_change(solution)
-        new_solution = make_small_change_better(solution)
+        new_solution = make_small_change(solution)
+        # new_solution = make_small_change_better(solution)
         new_value,_ = calc_solution_value(new_solution,graph)
         if new_value < curr_value:
             solution = deepcopy(new_solution)
