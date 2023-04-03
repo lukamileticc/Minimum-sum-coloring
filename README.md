@@ -29,6 +29,8 @@ U direktorijumu **graph_instances** se nalaze primeri grafova iz prakse podeljen
 grupu 2 cine grafovi koji imaju vise od 100 cvorova. Testiranje je izvrseno u programu **instances_test.py** koji redom svaku metodu pokrece nad zadatim grafom(prosledjujemo putanju do tog grafa u dimacs formatu). Svaka metoda se pokrece 5 puta i resenje(grafik) se smesta u direktorijum **graphic_results**
 gde se moze videti vreme izvrsavanja tih 5 iteracija, prosecna vrednost koju je metoda dobila kao i najbolje resenje koje je metoda pronasla (predstavljeno u vidu grafika).
 
+U direktorijumu **our_graph_instances** se nalaze dva primera grafa koje smo mi generisali,i to **random_graph.txt** koji ima 50 cvorova, i **small_random_graph.txt** koji ima 12 cvorova. Nad njima je takodje sprovedeno testiranje metoda a rezultati u vodu plot grafika su sacuvani u istom direktorijumu.
+
 Kao detaljan prikaz opisa problema, nacina resavanja istog, detalja implementacije i prikaz razultata ekspermentalnog testiranja procitati 
 pdf dokumentaciju: fajl - **Minimum sum coloring.pdf**
 
