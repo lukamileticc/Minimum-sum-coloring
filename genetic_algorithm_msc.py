@@ -107,7 +107,7 @@ def crossover(parent1, parent2,child1,child2):
 
 
     c2_code = [-1] * len(parent2.code)
-    c2_code[start_pos:end_pos] = parent1.code[start_pos:end_pos]
+    c2_code[start_pos:end_pos] = parent2.code[start_pos:end_pos]
 
     for i in range(len(c2_code)):
         if c2_code[i] == -1:
