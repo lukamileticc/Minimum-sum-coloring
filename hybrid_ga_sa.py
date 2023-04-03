@@ -118,10 +118,10 @@ if __name__ == '__main__':
     MUTATION_PROB = 0.05  # 5%
 
     # #pravimo graf
-    g = Graph(20)
+    g = Graph(12)
     g.random_graph()
     # g.save_graph_to_file("our_graph_instances/random_graph.txt")
-    g.load_graph_from_file("our_graph_instances/random_graph.txt")
+    g.load_graph_from_file("our_graph_instances/small_random_graph.txt")
     # # print(g)
 
     solution, curr_value = hybrid(g,POPULATION_SIZE,NUM_OF_GENERATIONS,ELITISM_SIZE,TOURNAMENT_SIZE,MUTATION_PROB)

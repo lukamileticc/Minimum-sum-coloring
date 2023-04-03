@@ -30,6 +30,10 @@ def calc_sum_of_coloring(permutation, graph):
                     zauzete[j].append(x_boje[ind])
 
     return sum(x_boje)
+
+
+#Prilagodjena verzija funkcije za trazenje permutacija
+#Originalna verzija: knjiga-Programiranje2 Predrag Janicic
 def next_permutation(permutation, i, used, graph):
 # ako smo stigli do kraja generisali smo jednu permutaciju
     if i == len(permutation):
