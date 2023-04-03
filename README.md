@@ -8,7 +8,7 @@
 link: https://www.csc.kth.se/~viggo/wwwcompendium/node16.html
 
 * INSTANCA: Graf $G=\left(V,E\right)$.
-* RESENJE: Obojiti graf G, podeliti skup cvorova V u disjunktne podskupove $V_1,V_2,\ldots,V_k$ takve da za svako $V_i$ vazi da nema istu boju kao V_j ($i \ne j$).
+* RESENJE: Obojiti graf G, podeliti skup cvorova V u disjunktne podskupove $V_1,V_2,\ldots,V_k$ takve da za svako $V_i$ vazi da nema istu boju kao $V_j (i \ne j$).
 * Metrika: Suma bojenja, $\sum_{1\le i\le k}\sum_{v\in V_i} i.$
 
 
