@@ -52,7 +52,7 @@ $ sudo snap install pycharm-educational --classic
 ```
 
 
-## Članovi tima :punch: :muscle:
+## Članovi tima :punch:
 
 - [Marija Papović, 63/2019](https://github.com/Marija63) :girl:
 - [Luka Miletić, 91/2017](https://github.com/lukamileticc) :boy:
